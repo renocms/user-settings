@@ -1,0 +1,8 @@
+{
+  "resources/js/components/user-settings/UserSettingPage.vue": {
+    "file": "components/user-settings/UserSettingPage.js",
+    "name": "components/user-settings/UserSettingPage",
+    "src": "resources/js/components/user-settings/UserSettingPage.vue",
+    "isEntry": true
+  }
+}
