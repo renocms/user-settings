@@ -24,7 +24,7 @@ class UserSettingPageRoute implements JavascriptRouteInterface
 
     public function getJsModule(): string
     {
-        return '/vendor/reno/cms-user-settings/build/components/user-settings/UserSettingPage.js';
+        return '/js/reno/cms-user-settings/build/components/user-settings/UserSettingPage.js';
     }
 
     public function getMeta(): array

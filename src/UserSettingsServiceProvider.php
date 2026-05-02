@@ -43,7 +43,7 @@ class UserSettingsServiceProvider extends ServiceProvider
         ], 'cms-config');
 
         $this->publishes([
-            __DIR__ . '/../public/build' => public_path('vendor/reno/cms-user-settings/build'),
+            __DIR__ . '/../public/build' => public_path('js/reno/cms-user-settings/build'),
         ], 'cms-assets');
 
         $this->registerMenuItems();
