@@ -3,7 +3,7 @@
         <div class="page-header no-bottom">
             <h1>{{ page.label || page.name }}</h1>
             <div class="context-selector">
-                <label for="context-select">Контекст:</label>
+                <label for="context-select">{{ $t('user_settings_context') }}</label>
                 <select id="context-select" v-model="selectedContextId" @change="loadPage" class="form-control">
                     <option v-for="context in contexts" :key="context.id" :value="context.id">
                         {{ context.name }}
@@ -57,14 +57,14 @@
                     </div>
                 </div>
                 <div v-else class="no-fields">
-                    Нет полей в этой вкладке.
+                    {{ $t('user_settings_no_fields_in_tab') }}
                 </div>
             </div>
         </div>
 
         <div class="form-actions">
             <button type="button" class="btn btn-primary" :disabled="saving" @click="save">
-                {{ saving ? 'Сохранение...' : 'Сохранить' }}
+                {{ saving ? $t('user_settings_saving') : $t('user_settings_save') }}
             </button>
         </div>
 
@@ -175,7 +175,7 @@ export default {
                 const response = await getContexts();
                 this.contexts = response.data || [];
             } catch (error) {
-                this.error = 'Не удалось загрузить контексты.';
+                this.error = this.$t('user_settings_error_load_contexts');
             }
         },
         scheduleLoadPage() {
@@ -200,7 +200,7 @@ export default {
                 this.formValues = { ...(page.values || {}) };
                 this.ensureSchemaDefaults();
             } catch (error) {
-                this.error = 'Не удалось загрузить страницу настроек.';
+                this.error = this.$t('user_settings_error_load_page');
             }
         },
         ensureSchemaDefaults() {
@@ -223,9 +223,9 @@ export default {
 
             try {
                 await updateUserSettingsPage(this.pageName, this.selectedContextId, this.formValues);
-                this.successMessage = 'Настройки сохранены.';
+                this.successMessage = this.$t('user_settings_success_saved');
             } catch (error) {
-                this.error = 'Не удалось сохранить настройки.';
+                this.error = this.$t('user_settings_error_save');
             } finally {
                 this.saving = false;
             }
@@ -243,8 +243,8 @@ export default {
         },
         getValueEditorComponent(jsModule) {
             const component = loadComponent(jsModule, {
-                errorMessage: 'Не удалось загрузить редактор',
-                loadingMessage: 'Загрузка редактора…',
+                errorMessage: this.$t('user_settings_error_load_editor'),
+                loadingMessage: this.$t('user_settings_loading_editor'),
             });
             if (!component) {
                 console.error('Failed to load component:', jsModule);

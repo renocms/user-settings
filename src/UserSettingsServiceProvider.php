@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Reno\Cms\Events\AdminApiRoutesRegistering;
+use Reno\Cms\Events\JsTranslationFilesRegistering;
 use Reno\Cms\Events\JavascriptRoutesRegistering;
 use Reno\Cms\Events\PermissionsRegistering;
 use Reno\Cms\Events\TopMenuItemsRegistering;
@@ -49,6 +50,7 @@ class UserSettingsServiceProvider extends ServiceProvider
         $this->registerMenuItems();
         $this->registerJavascriptRoutes();
         $this->registerPermissions();
+        $this->registerJsTranslations();
     }
 
     private function registerMenuItems(): void
@@ -97,6 +99,16 @@ class UserSettingsServiceProvider extends ServiceProvider
                     Route::get('/{name}', [UserSettingPageController::class, 'show']);
                     Route::put('/{name}', [UserSettingPageController::class, 'update']);
                 });
+        });
+    }
+
+    private function registerJsTranslations(): void
+    {
+        Event::listen(JsTranslationFilesRegistering::class, function (JsTranslationFilesRegistering $event): void {
+            $locale = $event->getLocale();
+
+            $event->addFile(__DIR__ . '/../resources/lang/' . $locale . '/permissions.php');
+            $event->addFile(__DIR__ . '/../resources/lang/' . $locale . '/user-settings.php');
         });
     }
 
